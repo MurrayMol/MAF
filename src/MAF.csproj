@@ -93,6 +93,8 @@
     <Compile Include="Common\Fasterflect\Extensions\Services\TryCreateInstanceExtensions.cs" />
     <Compile Include="Common\Fasterflect\Extensions\Services\TryInvokeWithValuesExtensions.cs" />
     <Compile Include="Common\Fasterflect\Extensions\Services\XmlTransformerExtensions.cs" />
+    <Compile Include="Common\Helpers.cs" />
+    <Compile Include="Common\Tree.cs" />
     <Compile Include="Common\TypeHelper.cs" />
     <Compile Include="OOM\Injections.cs" />
     <Compile Include="OOM\ValueInjecter\DescriptorTools.cs" />
