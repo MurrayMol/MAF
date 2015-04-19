@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -126,6 +127,21 @@
     <Compile Include="ORM\SqlHelper\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repo\Repo.cs" />
+    <Compile Include="Security\App\AuthenticationService.cs" />
+    <Compile Include="Security\App\AuthenticationServiceClients.cs" />
+    <Compile Include="Security\App\Authorization.cs" />
+    <Compile Include="Security\App\MafSecurity.cs" />
+    <Compile Include="Security\App\SecurityEntityManager.cs" />
+    <Compile Include="Security\Core\Entities.cs" />
+    <Compile Include="Security\Core\EntityManagerInterfaces.cs" />
+    <Compile Include="Security\Core\MafIdentity.cs" />
+    <Compile Include="Security\Core\Security.cs" />
+    <Compile Include="Security\Core\SecurityConsts.cs" />
+    <Compile Include="Security\Core\Services.cs" />
+    <Compile Include="Web\WebHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Security\Infra\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1110,7 +1110,7 @@ namespace MAF
 
     #endregion
 
-    #region
+    #region 一些细粒度类
 
     /// <summary>
     /// 如果实体类实现了此接口，Repository会检查此接口。
@@ -1155,6 +1155,82 @@ namespace MAF
         }
     }
 
+    public class PageInfo
+    {
+        internal PageInfo(uint size, uint number = 1, OrderBy orderBy = null)
+        {
+            Size = size;
+            Number = number;
+            OrderBy = orderBy;
+        }
+
+        public uint Size { get; private set; }
+        public uint Number { get; private set; }
+        public OrderBy OrderBy { get; private set; }
+
+        public void ChangeNumber(uint number)
+        {
+            Number = number;
+        }
+
+        public ListArgs ToListArgs()
+        {
+            return new ListArgs()
+            {
+                Max = (int)Size,
+                Skip = (int)(Size * (Number - 1)),
+                OrderBy = OrderBy
+            };
+        }
+    }
+
+    public class RecordInfo
+    {
+        internal RecordInfo(uint recordCount, uint pageSize)
+        {
+            Count = recordCount;
+            PageCount = (uint)Math.Ceiling(Count / (double)pageSize);
+        }
+
+        public uint Count { get; private set; }
+
+        public uint PageCount { get; private set; }
+    }
+
+    /// <summary>
+    /// 分页信息类
+    /// </summary>
+    public class Pages
+    {
+        #region 构造&属性
+
+        public Pages(uint pageSize, uint pageIndex, OrderBy orderBy = null)
+        {
+            CurrentPage = new PageInfo(Math.Max(pageSize, 1), Math.Max(pageIndex, 1), orderBy);
+        }
+
+        public PageInfo CurrentPage { get; private set; }
+
+        public RecordInfo Record { get; private set; }
+
+        #endregion
+
+        #region Public Method
+
+        public void SetRecord(int recordCount)
+        {
+            Record = new RecordInfo((uint)recordCount, CurrentPage.Size);
+        }
+
+        public string ToJson()
+        {
+            var s = "{{'RecordCount':{0},'PageSize':{1},'CurrentPage':{2},'PageCount':{3}}}";
+            return string.Format(s, Record.Count, CurrentPage.Size, CurrentPage.Number, Record.PageCount);
+        }
+
+        #endregion Public Method
+    }
+
     #endregion
 
     #region 客户使用帮助类
@@ -1185,7 +1261,7 @@ namespace MAF
             Conf = conf;
         }
 
-        public Repository CreateRepo(TypeZone zone = null)
+        public Repository NewRepo(TypeZone zone = null)
         {
             var provider = SelectProvider(zone);
             if (provider == null)
